@@ -1,16 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 import Seo from '../components/Seo';
 
 const index = ({ results }) => {
+  const router = useRouter();
+  const onClick = (id, title) => {
+    router.push(
+      { pathname: `/movies/${id}`, query: { title } },
+      `/movies/${id}`
+    );
+  };
   return (
     <div className="container">
       <Seo title="Home" />
-      {!results && <h4>Loading...</h4>}
+      {/* {!results && <h4>Loading...</h4>} */}
       {results?.map((movie) => {
         return (
-          <div className="movie" key={movie.id}>
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-            <h4>{movie.original_title}</h4>
+          <div
+            onClick={() => onClick(movie.id, movie.title)}
+            key={movie.id}
+            className="movie"
+          >
+            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+            <Link
+              href={{
+                pathname: `/movies/${movie.id}`,
+                query: { title: movie.original_title },
+              }}
+            >
+              <a>{movie.original_title}</a>
+            </Link>
           </div>
         );
       })}
@@ -20,6 +40,9 @@ const index = ({ results }) => {
           grid-template-columns: 1fr 1fr;
           padding: 20px;
           gap: 20px;
+        }
+        .movie {
+          cursor: pointer;
         }
         .movie img {
           max-width: 100%;
