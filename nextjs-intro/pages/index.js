@@ -6,10 +6,7 @@ import Seo from '../components/Seo';
 const index = ({ results }) => {
   const router = useRouter();
   const onClick = (id, title) => {
-    router.push(
-      { pathname: `/movies/${id}`, query: { title } },
-      `/movies/${id}`
-    );
+    router.push(`/movies/${title}/${id}`);
   };
   return (
     <div className="container">
@@ -23,12 +20,7 @@ const index = ({ results }) => {
             className="movie"
           >
             <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-            <Link
-              href={{
-                pathname: `/movies/${movie.id}`,
-                query: { title: movie.original_title },
-              }}
-            >
+            <Link href={`/movies/${movie.original_title}/${movie.id}`}>
               <a>{movie.original_title}</a>
             </Link>
           </div>
@@ -66,7 +58,7 @@ export default index;
 
 export async function getServerSideProps() {
   const { results } = await (
-    await fetch(`http://localhost:3001/api/movies`)
+    await fetch(`http://localhost:3002/api/movies`)
   ).json();
   return {
     props: {
