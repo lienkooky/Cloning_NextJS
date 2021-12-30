@@ -8,17 +8,14 @@ const NavBar = () => {
   return (
     <nav>
       <Link href="/">
-        <a className={router.pathname === '/' ? 'active' : ''}>Home</a>
+        <a>Home</a>
       </Link>
       <Link href="/about">
-        <a className={router.pathname === '/about' ? 'active' : ''}>About</a>
+        <a>About</a>
       </Link>
-      <style jsx>{`
-        nav {
-          background-color: #000;
-        }
+      <style jsx global>{`
         a {
-          text-decoration: none;
+          color: #6999ac;
         }
         .active {
           color: yellow;
